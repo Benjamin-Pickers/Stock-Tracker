@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <form id="login_user" method="POST" action="/">
+    UserName: <input type="text" name="username">
+    <input type="submit" name="Find" value="Login">
+  </form>
+
+  <p> You can use the UserName default </p>
+  <p> Create new account <a href="/register">here</a></p>
+{% endblock %}

@@ -1,0 +1,68 @@
+/*font-family: 'Playfair Display', serif;*/
+body
+{
+  background-color: rgba(16,0,196, 0.8);
+  /*Crucial To Keep Footer Anchored To The Bottom   */
+  min-height: 100vh;
+}
+
+main{margin-bottom: 15px;}
+
+
+#header
+{
+  margin-bottom: 3%;
+  text-align: center;
+  background-color: #1000c4;
+  width: 100%;
+}
+
+.title
+{
+  margin: 1%;
+  font-family: 'Playfair Display', serif;
+  color:  #F7CE3E;
+  font-size: 50px;
+}
+
+#main
+{
+  background-color: #F7CE3E;
+  border-radius: 15px;
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#login_user{margin: 10px;}
+#register_user{margin-bottom: 10px;}
+#newAccount{margin-top: 10px;   font-size: 24px;}
+
+form{text-align: center;}
+
+.alert
+{
+  text-align: center;
+}
+
+#stockInput
+{
+  margin: 2%;
+}
+
+#up{color: green;}
+#down{color: red;}
+
+footer
+{
+  width: 100%;
+  background-color: #1000c4;
+}
+
+.githubLink
+{
+  width: 25px;
+  height: 25px;
+  padding: 2px;
+}

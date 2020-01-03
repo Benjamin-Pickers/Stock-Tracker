@@ -1,0 +1,22 @@
+{% extends "layout.html"%}
+
+{% block content %}
+  <form id="stockInput" method="POST" action="/home">
+    Stock Symbol: <input type="text" name="symbol">
+    <input type="submit" name="Find" value="Submit">
+  </form>
+  {% if list %}
+    {% for info in list%}
+      <form action="/remove" method="post">
+        <p>{{info[0]}}- Price: ${{info[1]}} | Change:<span id="{{ info[3] }}"> ${{info[2]}} </span>
+        <button type="submit" name="Remove" value="{{ info[0] }}"> Remove </button>
+        </p>
+      </form>
+    {% endfor %}
+  {% endif %}
+  {% if list|length > 0 %}
+    <form action="/refresh" method="post">
+      <button type="submit" name="Refresh" value="refresh"> Refresh </button>
+    </form>
+  {% endif %}
+  {% endblock %}

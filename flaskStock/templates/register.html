@@ -1,0 +1,13 @@
+{% extends "layout.html"%}
+
+{% block content %}
+<p id="newAccount">Create New Account </p>
+
+<form id="register_user" method="POST" action="/register">
+  New UserName: <input type="text" name="username">
+  <input type="submit" name="NewUser" value="Create">
+</form>
+
+<p> If you have an existing account <a href="/"> login </a></p>
+
+{% endblock %}
