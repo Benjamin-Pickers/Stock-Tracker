@@ -1,20 +1,35 @@
 from flask import render_template, request, url_for, flash, redirect
 from flaskStock import app, db
 from flaskStock.webScrape import stockScraper
+from flaskStock.forms import RegistrationForm, LoginForm
 from flaskStock.model import User, StockData
+from flask_login import login_user, current_user, logout_user, login_required
 
 
 list = []
 
 @app.route("/", methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = LoginForm()
+    if form.validate_on_submit:
+        user = User.query.filter_by(username =form.username.data).first()
+        if user:
+            login_user(user, remember=form.remember.data)
+            return redirect(url_for('home'))
     return render_template('login.html')
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
-        user_name = request.form['username']
-        user = User(username=user_name)
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data)
         db.session.add(user)
         db.session.commit()
         flash('Your account has been created, you can now login', 'success')
@@ -22,6 +37,7 @@ def register():
     return render_template('register.html')
 
 @app.route("/home", methods=['GET', 'POST'])
+@login_required
 def home():
     if request.method == 'POST':
         addItem = True
