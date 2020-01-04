@@ -25,6 +25,12 @@ main{margin-bottom: 15px;}
   font-size: 50px;
 }
 
+#logout
+{
+  float: right;
+  color: #F7CE3E;
+}
+
 #main
 {
   background-color: #F7CE3E;
