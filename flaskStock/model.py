@@ -15,7 +15,7 @@ class User(db.Model, UserMixin):
 
 class StockData(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    symbol = db.Column(db.String(25), unique=True, nullable=False)
+    symbol = db.Column(db.String(25), nullable=False)
     price = db.Column(db.String(25), nullable=False)
     change = db.Column(db.String(15), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
