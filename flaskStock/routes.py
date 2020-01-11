@@ -30,9 +30,14 @@ def register():
     form = RegistrationForm()
     if request.method == 'POST':
         user = User(username=form.username.data)
-        db.session.add(user)
-        db.session.commit()
-        flash('Your account has been created, you can now login', 'success')
+        available = User.query.filter_by(username =form.username.data).first()
+        if available:
+            flash('Username is already taken, please chose another', 'danger')
+            return redirect(url_for('register'))
+        else:
+            db.session.add(user)
+            db.session.commit()
+            flash('Your account has been created, you can now login!', 'success')
         return redirect(url_for('login'))
     return render_template('register.html')
 
