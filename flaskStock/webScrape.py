@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
+import os
+import sys
 import pandas as pd
 
 
@@ -9,7 +11,7 @@ class stockScraper:
         self.symbol = symbol.upper()
 
     def get_info(self):
-        df = pd.read_excel (r'C:\Users\Ben Pickers\Documents\StockScraper\flaskStock\symbols.xlsx')
+        df = pd.read_excel (os.path.join(sys.path[0], "flaskStock\symbols.xlsx"))
         ticker_Column = df['Ticker']
         is_valid = False
 
