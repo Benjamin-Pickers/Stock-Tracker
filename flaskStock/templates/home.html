@@ -8,14 +8,15 @@
   {% if stocks %}
     {% for info in stocks%}
       <form action="/remove" method="post">
-        <p>{{info.symbol}}- Price: ${{info.price}} | Change:<span id="{{ price_id }}"> ${{info.change}} </span>
-        <button type="submit" name="Remove" value="{{ info.symbol }}"> Remove </button>
+        <p class="stocks">
+        {{info.symbol}}- Price: ${{info.price}} | Change:<span id="{{ price_id }}"> ${{info.change}} </span>
+        <button class="removeButton" type="submit" name="Remove" value="{{ info.symbol }}"> Remove </button>
         </p>
       </form>
     {% endfor %}
   {% endif %}
   {% if stocks|length > 0 %}
-    <form action="/refresh" method="post">
+    <form id="refreshButton" action="/refresh" method="post">
       <button type="submit" name="Refresh" value="refresh"> Refresh </button>
     </form>
   {% endif %}
