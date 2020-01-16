@@ -9,7 +9,7 @@
     {% for info in stocks%}
       <form action="/remove" method="post">
         <p class="stocks">
-        {{info.symbol}}- Price: ${{info.price}} | Change:<span id="{{ price_id }}"> ${{info.change}} </span>
+        {{info.symbol}}- Price: ${{info.price}} | Change:<span> ${{info.change}} </span>
         <button class="removeButton" type="submit" name="Remove" value="{{ info.symbol }}"> Remove </button>
         </p>
       </form>

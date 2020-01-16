@@ -31,7 +31,7 @@
         </div>
         {% if current_user.is_authenticated %}
         <div class="d-flex justify-content-center">
-              <a class="nav-item nav-link" id="logout" href="{{ url_for('logout') }}">Sign out of {{ current_user.username}} </a>
+              <a class="nav-item nav-link" id="logout" href="{{ url_for('users.logout') }}">Sign out of {{ current_user.username}} </a>
         </div>
         {% endif %}
     </main>
