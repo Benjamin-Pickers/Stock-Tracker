@@ -54,25 +54,18 @@ main{margin-bottom: 15px;}
 }
 
 #login_user{margin: 10px;}
+
 #register_user{margin-bottom: 10px;}
+
 #newAccount{margin-top: 10px;   font-size: 24px;}
 
 form{text-align: center;}
 
-.alert
-{
-  text-align: center;
-}
+.alert{text-align: center;}
 
-#stockInput
-{
-  margin: 2%;
-}
+#stockInput{ margin: 2%;}
 
-#refreshButton
-{
-  margin-bottom: 10px;
-}
+#refreshButton{margin-bottom: 10px;}
 
 footer
 {
@@ -85,4 +78,9 @@ footer
   width: 25px;
   height: 25px;
   padding: 2px;
+}
+
+.error_page
+{
+  text-align: center;
 }
