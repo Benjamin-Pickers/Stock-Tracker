@@ -80,7 +80,4 @@ footer
   padding: 2px;
 }
 
-.error_page
-{
-  text-align: center;
-}
+.error_page{text-align: center;}

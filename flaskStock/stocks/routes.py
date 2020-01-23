@@ -6,6 +6,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 
 stocks = Blueprint('stocks', __name__)
 
+#Home page route, you must be logged in to access
 @stocks.route("/home", methods=['GET', 'POST'])
 @login_required
 def home():
@@ -20,6 +21,7 @@ def home():
         for item in stocks:
             if symbol in item.symbol:
                 addItem = False
+        #We only add a stock to the page if its not already there and if the stock exists in the tsx
         if(addItem and info[0] != '0'):
             newStock = StockData(symbol= info[0], price = info[1], change = info[2], tracker= current_user)
             db.session.add(newStock)
@@ -29,7 +31,7 @@ def home():
         return redirect(url_for('stocks.home'))
     return render_template('home.html', stocks = stocks)
 
-
+#Route to remove a stock from a users database
 @stocks.route("/remove", methods=['GET', 'POST'])
 def remove():
     if request.method == 'POST':
@@ -40,6 +42,7 @@ def remove():
                 db.session.commit()
     return redirect(url_for('stocks.home'))
 
+#Refreshs the stocks by webscraping the website again to find updated prices
 @stocks.route("/refresh", methods=['GET', 'POST'])
 def refresh():
     if request.method == 'POST':
