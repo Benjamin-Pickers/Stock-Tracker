@@ -5,7 +5,7 @@ Using beautifulSoup4, I wrote a python script that would go to [TMXmoney.com](ht
 and grab the stock price and daily change. To display this information, I created a basic web application that uses the 
 micro web frame work, flask and can be found at [flaskstock.ca](https://www.flaskstock.ca/). Flask will handle all requests
 for stocks and allows users to create their own accounts to track their own list of stocks. I decided to omit having passwords for 
-accounts and instead just use usernames to login, as there is no private stored in accounts and I felt it would be easier to 
+accounts and instead just use usernames to login, as there is no private information stored in accounts and I felt it would be easier to 
 just sign in with a username. Since not everyone would want to make an account to try out the program, I created a default 
 account that uses that username "default", that can be used by anyone.
 
