@@ -15,16 +15,13 @@ class stockScraper:
         df = pd.read_excel (os.path.join(sys.path[0], "flaskStock\symbols.xlsx"))
         #Grabs the ticker column from the spreadsheet
         ticker_Column = df['Ticker']
-        is_valid = False
 
-        #Check to see if the stock ticker given is a valid tsx stock by comparing it with the spreadsheet
-        for i in ticker_Column:
-            if (i == self.symbol):
-                is_valid =True
+        #Website that we will grab the prices from
+        url = 'https://web.tmxmoney.com/quote.php?qm_symbol=' + self.symbol
 
-        if(is_valid):
-            #Website that we will scrape from
-            url = 'https://web.tmxmoney.com/quote.php?qm_symbol=' + self.symbol
+        if(requests.get(url).text):
+
+            #Grab the source using request library
             src = requests.get(url).text
             s = BeautifulSoup(src, 'lxml')
             #Find the span element with class price, it should hold the price of the stock, if not it'll return None Type

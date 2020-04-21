@@ -27,7 +27,7 @@ def home():
             db.session.add(newStock)
             db.session.commit()
         elif (info[0] == '0'):
-            flash('Not a valid TSX stock', 'danger')
+            flash('Not a valid TSX stock. If you are looking for a US stock add :US to the end of the ticker', 'danger')
         return redirect(url_for('stocks.home'))
     return render_template('home.html', stocks = stocks)
 
