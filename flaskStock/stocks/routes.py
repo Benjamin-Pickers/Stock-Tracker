@@ -14,15 +14,18 @@ def home():
     if request.method == 'POST':
         addItem = True
         symbol = request.form['symbol'].upper()
-        scrape = stockScraper(symbol)
-        info = scrape.get_info()
 
         #check if item is already in the database
         for item in stocks:
             if symbol in item.symbol:
-                addItem = False
-        #We only add a stock to the page if its not already there and if the stock exists in the tsx
-        if(addItem and info[0] != '0'):
+               return redirect(url_for('stocks.home'))
+
+        #Call webscraper
+        scrape = stockScraper(symbol)
+        info = scrape.get_info()
+
+        #We only add if the scraper retrieved info
+        if(info[0] != '0'):
             newStock = StockData(symbol= info[0], price = info[1], change = info[2], tracker= current_user)
             db.session.add(newStock)
             db.session.commit()

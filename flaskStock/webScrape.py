@@ -1,5 +1,9 @@
 from bs4 import BeautifulSoup
 import requests
+from requests_html import AsyncHTMLSession
+import asyncio
+import pyppdf.patch_pyppeteer
+import pyppeteer
 import os
 import sys
 import pandas as pd
@@ -10,28 +14,42 @@ class stockScraper:
     def __init__(self, symbol):
         self.symbol = symbol.upper()
 
+    #Work around to render the javascript of the page
+    async def get_site(self):
+        new_loop=asyncio.new_event_loop()
+        asyncio.set_event_loop(new_loop)
+        session = AsyncHTMLSession()
+        browser = await pyppeteer.launch({
+            'ignoreHTTPSErrors':True,
+            'headless':True,
+            'handleSIGINT':False,
+            'handleSIGTERM':False,
+            'handleSIGHUP':False
+        })
+        session._browser = browser
+        url = 'https://money.tmx.com/en/quote/' + self.symbol
+        resp_page = await session.get(url)
+        await resp_page.html.arender()
+        return resp_page
+
+
     def get_info(self):
-        #loads in excel spreadsheet, that has all tsx stocks information stored in it, as a dataframe
-        df = pd.read_excel (os.path.join(sys.path[0], "flaskStock\symbols.xlsx"))
-        #Grabs the ticker column from the spreadsheet
-        ticker_Column = df['Ticker']
 
-        #Website that we will grab the prices from
-        url = 'https://web.tmxmoney.com/quote.php?qm_symbol=' + self.symbol
+        #Create a loop and then request the page
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        src = loop.run_until_complete(self.get_site())
 
-        if(requests.get(url).text):
+        if(src):
+            #Give the source to BeautifulSoup
+            s = BeautifulSoup(src.html.raw_html, 'lxml')
 
-            #Grab the source using request library
-            src = requests.get(url).text
-            s = BeautifulSoup(src, 'lxml')
-            #Find the span element with class price, it should hold the price of the stock, if not it'll return None Type
-            test = s.find('span', class_="price")
-            #If we do find a price, then grab the rest of the information needed and store it into an array and return that array
-            if test:
-                price = s.find('span', class_="price").find('span', recursive = False).text
-                c = s.find('div', class_="col-5 col-md-6").find('strong')
-                change = '  '.join(c.text.split())
-                info_list = [str(self.symbol), str(price), str(change)]
+            #Find the first two span elements in main, they hold the price and change, if not it'll empty list
+            price = s.find('body').find('div', id='root').find('div', id="main").find_all('span', limit=2)
+            #If the list isn't empty then return our values
+            if price:
+                print(price)
+                info_list = [str(self.symbol), str(price[0].text), str(price[1].text)]
             else:
                 #No price was found so return all zeros, to indicate that the information was not a valid tsx stock
                 info_list = ['0', '0', '0']
